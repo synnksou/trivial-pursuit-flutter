@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +24,10 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        backgroundColor: Colors.white,
+      ),
+      darkTheme: ThemeData(
+        backgroundColor: Colors.black,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -68,6 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
+  final Color _itemColor = Colors.deepOrangeAccent;
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -100,17 +107,20 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: SvgPicture.asset('assets/icons/home-variant.svg',
+                color: _selectedIndex == 0 ? _itemColor : Colors.black),
+            label: 'Accueil',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Score',
+            icon: SvgPicture.asset('assets/icons/poll.svg',
+                color: _selectedIndex == 1 ? _itemColor : Colors.black),
+            label: 'Classement',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: SvgPicture.asset('assets/icons/account.svg',
+                color: _selectedIndex == 2 ? _itemColor : Colors.black),
             label: 'Profil',
           ),
         ],
