@@ -1,36 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@synnksou 
-flutter
-/
-flutter
-Public
-Code
-Issues
-5k+
-Pull requests
-211
-Actions
-Projects
-170
-Wiki
-Security
-Insights
-flutter/.gitignore
-@cbracken
-cbracken [macOS] Adds macOS project files to layers example (#102539)
-…
-Latest commit b04bdd0 on 13 May
- History
- 20 contributors
-@gspencergoog@jonahwilliams@xster@jmagman@christopherfujino@mravn-google@goderbauer@cbracken@yjbanov@pq@mdebbar@jxltom
-122 lines (111 sloc)  2.24 KB
-
 # Miscellaneous
 *.class
 *.lock
@@ -168,3 +135,4 @@ Training
 Blog
 About
 You have unread notifications
+.vscode/
