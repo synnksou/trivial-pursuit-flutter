@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: MyApp.themeColor,
         onTap: _onItemTapped,
       ),
       body: (_widgetOptions.elementAt(_selectedIndex)),
