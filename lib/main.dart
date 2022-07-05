@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/learderboard/leaderboard.dart';
+import 'package:trivial_pursuit_flutter/ui/pages/profil/profil.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,9 +20,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color.fromRGBO(15, 23, 41, 0),
+        scaffoldBackgroundColor: const Color.fromRGBO(26, 32, 4, 0),
         primarySwatch: themeColor,
       ),
       darkTheme: ThemeData(
@@ -53,13 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
       style: optionStyle,
     ),
     Leaderboard(),
-    const Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    const Profil()
   ];
 
-  final Color _itemColor = Colors.deepOrangeAccent;
+  final Color _itemColor = const Color.fromRGBO(86, 11, 227, 1);
 
   void _onItemTapped(int index) {
     setState(() {
