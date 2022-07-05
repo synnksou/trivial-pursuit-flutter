@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../data/entities/user/user.dart';
 
@@ -14,7 +17,7 @@ class _ProfilState extends State<Profil> {
     id: 1,
     score: 2,
     pseudo: "pseudo",
-    avatar: "avatar",
+    avatar: "assets/images/Account.jpeg",
     games: 3,
   );
 
@@ -22,17 +25,7 @@ class _ProfilState extends State<Profil> {
       color: Color.fromRGBO(187, 203, 236, 1),
       fontSize: 16,
       fontWeight: FontWeight.bold);
-
-/*   final ButtonStyle flatButtonStyle = TextButton(
-    style: (
-      primary: Colors.black87,
-      minimumSize: const Size(88, 36),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2.0)),
-      )),
-  );
- */
+      
   final TextEditingController _pseudoController = TextEditingController();
 
   void handleChangePseudo(pseudo) {
@@ -41,6 +34,15 @@ class _ProfilState extends State<Profil> {
     });
 
     user.setPseudo(pseudo);
+  }
+
+  void _handleImagePicker() {
+    File? image;
+    Future pickImage() async {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      setState(() => user.avatar = image.path);
+    }
   }
 
   @override
@@ -109,11 +111,15 @@ class _ProfilState extends State<Profil> {
         ),
         body: Center(
             child: Column(children: <Widget>[
-          CircleAvatar(
-            backgroundColor: Colors.brown.shade800,
-            radius: 24,
-            child: const Text('AH'),
-          ),
+          GestureDetector(
+              onTap: _handleImagePicker,
+              child: CircleAvatar(
+                backgroundColor: Colors.brown.shade800,
+                radius: 24,
+                child: ClipOval(
+                  child: Image.asset(user.avatar),
+                ),
+              )),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Text("Nom d'utilisateur : ${user.pseudo}",

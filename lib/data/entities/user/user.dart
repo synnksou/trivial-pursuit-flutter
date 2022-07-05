@@ -6,10 +6,10 @@ class User {
   int? id;
   int? score;
   String? pseudo;
-  String? avatar;
+  String avatar;
   int? games;
 
-  User({this.id, this.score, this.pseudo, this.avatar, this.games});
+  User({this.id, this.score, this.pseudo, required this.avatar, this.games});
 
   @override
   String toString() {
@@ -28,7 +28,7 @@ class User {
         id: data['id'] as int?,
         score: data['score'] as int?,
         pseudo: data['pseudo'] as String?,
-        avatar: data['avatar'] as String?,
+        avatar: data['avatar'] as String,
         games: data['games'] as int?,
       );
 
