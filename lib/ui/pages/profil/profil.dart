@@ -25,8 +25,9 @@ class _ProfilState extends State<Profil> {
       color: Color.fromRGBO(187, 203, 236, 1),
       fontSize: 16,
       fontWeight: FontWeight.bold);
-      
+
   final TextEditingController _pseudoController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
 
   void handleChangePseudo(pseudo) {
     setState(() {
@@ -36,13 +37,10 @@ class _ProfilState extends State<Profil> {
     user.setPseudo(pseudo);
   }
 
-  void _handleImagePicker() {
-    File? image;
-    Future pickImage() async {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      setState(() => user.avatar = image.path);
-    }
+  Future pickImage() async {
+    final image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+    setState(() => user.avatar = image.path);
   }
 
   @override
@@ -111,13 +109,15 @@ class _ProfilState extends State<Profil> {
         ),
         body: Center(
             child: Column(children: <Widget>[
-          GestureDetector(
-              onTap: _handleImagePicker,
+          InkWell(
+              onTap: pickImage,
               child: CircleAvatar(
                 backgroundColor: Colors.brown.shade800,
                 radius: 24,
                 child: ClipOval(
-                  child: Image.asset(user.avatar),
+                  child: user.avatar == "assets/images/Account.jpeg"
+                      ? Image.asset(user.avatar)
+                      : Image.file(File(user.avatar)),
                 ),
               )),
           Padding(
