@@ -3,17 +3,25 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 
 class User {
-  final int? id;
-  final int? score;
-  final String? pseudo;
-  final String? avatar;
-  final int? games;
+  int? id;
+  int? score;
+  String? pseudo;
+  String? avatar;
+  int? games;
 
-  const User({this.id, this.score, this.pseudo, this.avatar, this.games});
+  User({this.id, this.score, this.pseudo, this.avatar, this.games});
 
   @override
   String toString() {
     return 'User(id: $id, score: $score, pseudo: $pseudo, avatar: $avatar, games: $games)';
+  }
+
+  setPseudo(String pseudo) {
+    this.pseudo = pseudo;
+  }
+
+  getPseudo() {
+    return pseudo;
   }
 
   factory User.fromMap(Map<String, dynamic> data) => User(

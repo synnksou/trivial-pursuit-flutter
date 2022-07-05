@@ -21,14 +21,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color.fromRGBO(26, 32, 4, 0),
+        scaffoldBackgroundColor: const Color.fromRGBO(26, 32, 44, 1),
         primarySwatch: themeColor,
       ),
       darkTheme: ThemeData(
           primarySwatch: themeColor,
-          backgroundColor: const Color.fromRGBO(15, 23, 41, 1)),
+          scaffoldBackgroundColor: const Color.fromRGBO(26, 32, 44, 1)),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 't'),
     );
   }
 }
@@ -53,10 +53,13 @@ class _MyHomePageState extends State<MyHomePage> {
       style: optionStyle,
     ),
     Leaderboard(),
-    const Profil()
+    Profil()
   ];
 
-  final Color _itemColor = const Color.fromRGBO(86, 11, 227, 1);
+/*   final Color _itemColor = const Color.fromRGBO(86, 11, 227, 1);
+ */
+
+  final Color _itemColor = Colors.blueAccent;
 
   void _onItemTapped(int index) {
     setState(() {
