@@ -2,18 +2,18 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 
-class User {
+class TriviaUser {
   int? id;
   int? score;
   String? pseudo;
   String? avatar;
   int? games;
 
-  User({this.id, this.score, this.pseudo, this.avatar, this.games});
+  TriviaUser({this.id, this.score, this.pseudo, this.avatar, this.games});
 
   @override
   String toString() {
-    return 'User(id: $id, score: $score, pseudo: $pseudo, avatar: $avatar, games: $games)';
+    return 'TriviaUser(id: $id, score: $score, pseudo: $pseudo, avatar: $avatar, games: $games)';
   }
 
   setPseudo(String pseudo) {
@@ -24,7 +24,7 @@ class User {
     return pseudo;
   }
 
-  factory User.fromMap(Map<String, dynamic> data) => User(
+  factory TriviaUser.fromMap(Map<String, dynamic> data) => TriviaUser(
         id: data['id'] as int?,
         score: data['score'] as int?,
         pseudo: data['pseudo'] as String?,
@@ -42,7 +42,7 @@ class User {
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [User].
+  /// Parses the string and returns the resulting Json object as [TriviaUser].
   /// If the parsing fails, this function throws a [FormatException].
   /// The optional [reviver] function can be used to transform the Json object
   /// before it is returned.
@@ -54,13 +54,13 @@ class User {
   /// The [toJson] function should only be used to convert the object to a
   /// representation that is JSON encodable.
 
-  factory User.fromJson(dynamic data) {
-    return User.fromMap(json.decode(data) as Map<String, dynamic>);
+  factory TriviaUser.fromJson(dynamic data) {
+    return TriviaUser.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
-  /// Converts [User] to a JSON string.
+  /// Converts [TriviaUser] to a JSON string.
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -73,14 +73,14 @@ class User {
     return map;
   }
 
-  User copyWith({
+  TriviaUser copyWith({
     int? id,
     int? score,
     String? pseudo,
     String? avatar,
     int? games,
   }) {
-    return User(
+    return TriviaUser(
       id: id ?? this.id,
       score: score ?? this.score,
       pseudo: pseudo ?? this.pseudo,
@@ -92,7 +92,7 @@ class User {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! User) return false;
+    if (other is! TriviaUser) return false;
     final mapEquals = const DeepCollectionEquality().equals;
     return mapEquals(other.toMap(), toMap());
   }

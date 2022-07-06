@@ -6,40 +6,41 @@ class UserFirebase {
       FirebaseFirestore.instance;
   static UserFirebase? _instance;
 
-  static late final CollectionReference<User> _userRef;
+  static late final CollectionReference<TriviaUser> _userRef;
 
   UserFirebase._();
 
   static getInstance() {
     if (_instance == null) {
       _userRef = _firebaseFirestore.collection('users').withConverter(
-          fromFirestore: ((snapshot, _) => User.fromJson(snapshot.data()!)),
+          fromFirestore: ((snapshot, _) =>
+              TriviaUser.fromJson(snapshot.data()!)),
           toFirestore: ((user, _) => user.toJson()));
     }
     _instance = UserFirebase._();
     return _instance;
   }
 
-  Future<DocumentReference<User>> insertUser(User user) async =>
+  Future<DocumentReference<TriviaUser>> insertUser(TriviaUser user) async =>
       _userRef.add(user);
 
-  Future<QuerySnapshot<User>> getUsers() async => await _userRef.get();
+  Future<QuerySnapshot<TriviaUser>> getUsers() async => await _userRef.get();
 
-  Future<QuerySnapshot<User>> searchUsers(String name) async {
+  Future<QuerySnapshot<TriviaUser>> searchUsers(String name) async {
     return await _userRef.where('name', isEqualTo: name).get();
   }
 
-  Future<QuerySnapshot<User>> getUserById(String id) async {
+  Future<QuerySnapshot<TriviaUser>> getUserById(String id) async {
     var document = await _userRef.where('id', isEqualTo: id).get();
     return document; // faut faire le data() pour avoir le document
   }
 
-  Future<void> insertUserWithId(User user, String id) async =>
+  Future<void> insertUserWithId(TriviaUser user, String id) async =>
       _userRef.doc(id).set(user);
 
-  Future<void> updateUser(User user) async =>
+  Future<void> updateUser(TriviaUser user) async =>
       _userRef.doc(user.id.toString()).update(user.toJson());
 
-  Future<void> deleteUser(User user) async =>
+  Future<void> deleteUser(TriviaUser user) async =>
       _userRef.doc(user.id.toString()).delete();
 }

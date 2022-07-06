@@ -8,6 +8,7 @@ import 'package:trivial_pursuit_flutter/ui/pages/learderboard/leaderboard.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/profil/profil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'ui/pages/signup/signup_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,8 +40,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(
           seconds: 3,
-          navigateAfterSeconds:
-              const MyHomePage(title: 'Flutter Demo Home Page'),
+          navigateAfterSeconds: const MyHomePage(title: ''),
           image: Image.asset('assets/images/large_trivialistic.png'),
           photoSize: 150.0,
           backgroundColor: Colors.white,
@@ -64,10 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
+    const SignupPage(),
     Leaderboard(),
     const Profil()
   ];
