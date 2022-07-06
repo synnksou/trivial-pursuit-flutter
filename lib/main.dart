@@ -3,8 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/learderboard/leaderboard.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/profil/profil.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

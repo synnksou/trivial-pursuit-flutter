@@ -1,60 +1,53 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
+import 'package:trivial_pursuit_flutter/data/entities/question/question.dart';
 
-class Result {
+class Results {
   int? responseCode;
-  List<Result>? results;
+  String? date;
+  List<FormQuestion>? results;
 
-  Result({this.responseCode, this.results});
+  Results({this.responseCode, this.date, this.results});
 
   @override
   String toString() {
-    return 'Result(responseCode: $responseCode, results: $results)';
+    return 'Results(responseCode: $responseCode, date: $date, results: $results)';
   }
 
-  factory Result.fromMap(Map<String, dynamic> data) => Result(
+  factory Results.fromMap(Map<String, dynamic> data) => Results(
         responseCode: data['response_code'] as int?,
+        date: data['date'] as String?,
         results: (data['results'] as List<dynamic>?)
-            ?.map((e) => Result.fromMap(e as Map<String, dynamic>))
+            ?.map((e) => FormQuestion.fromMap(e as Map<String, dynamic>))
             .toList(),
       );
 
   Map<String, dynamic> toMap() => {
         'response_code': responseCode,
+        'date': date,
         'results': results?.map((e) => e.toMap()).toList(),
       };
 
-  /// `dart:convert`
+  /// dart:convert
   ///
-  /// Parses the string and returns the resulting Json object as [Result].
-  factory Result.fromJson(String data) {
-    return Result.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [Results].
+  factory Results.fromJson(String data) {
+    return Results.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
-  /// `dart:convert`
+  /// dart:convert
   ///
-  /// Converts [Result] to a JSON string.
+  /// Converts [Results] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  Result copyWith({
+  Results copyWith({
     int? responseCode,
-    List<Result>? results,
+    List<FormQuestion>? results,
   }) {
-    return Result(
+    return Results(
       responseCode: responseCode ?? this.responseCode,
+      date: date ?? date,
       results: results ?? this.results,
     );
   }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    if (other is! Result) return false;
-    final mapEquals = const DeepCollectionEquality().equals;
-    return mapEquals(other.toMap(), toMap());
-  }
-
-  @override
-  int get hashCode => responseCode.hashCode ^ results.hashCode;
 }

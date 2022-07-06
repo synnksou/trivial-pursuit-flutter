@@ -1,0 +1,190 @@
+{
+  "project_info": {
+    "project_number": "360430963641",
+    "project_id": "flutter-trivia-b0463",
+    "storage_bucket": "flutter-trivia-b0463.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360430963641:android:ae5e1bb25bc31a167a4468",
+        "android_client_info": {
+          "package_name": "com.alexscdt.trivial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcgMZt7-t3Z3WRdAnXhWvSdplWncUQ110"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "360430963641-b96fmspgkvs7k5ajths9p1jtt3npupob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterTrivial"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360430963641:android:4934a3f8bd4252037a4468",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcgMZt7-t3Z3WRdAnXhWvSdplWncUQ110"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "360430963641-b96fmspgkvs7k5ajths9p1jtt3npupob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterTrivial"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360430963641:android:3251ab5e0e9a09af7a4468",
+        "android_client_info": {
+          "package_name": "com.example.flutter_trivial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcgMZt7-t3Z3WRdAnXhWvSdplWncUQ110"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "360430963641-b96fmspgkvs7k5ajths9p1jtt3npupob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterTrivial"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360430963641:android:3a0a4d32e932916b7a4468",
+        "android_client_info": {
+          "package_name": "com.example.quizz_dezz_nutzz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcgMZt7-t3Z3WRdAnXhWvSdplWncUQ110"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "360430963641-b96fmspgkvs7k5ajths9p1jtt3npupob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterTrivial"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360430963641:android:85a001b4b0ac0d5b7a4468",
+        "android_client_info": {
+          "package_name": "com.example.trivial_pursuit_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcgMZt7-t3Z3WRdAnXhWvSdplWncUQ110"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360430963641-jpvpflg98lp0qgtap0pn10g3nicq90d9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "360430963641-b96fmspgkvs7k5ajths9p1jtt3npupob.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterTrivial"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
