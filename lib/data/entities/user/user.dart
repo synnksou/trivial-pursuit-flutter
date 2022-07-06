@@ -54,14 +54,24 @@ class User {
   /// The [toJson] function should only be used to convert the object to a
   /// representation that is JSON encodable.
 
-  factory User.fromJson(String data) {
+  factory User.fromJson(dynamic data) {
     return User.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
   /// Converts [User] to a JSON string.
-  String toJson() => json.encode(toMap());
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['score'] = score;
+    map['pseudo'] = pseudo;
+    map['avatar'] = avatar;
+    map['games'] = games;
+
+    return map;
+  }
 
   User copyWith({
     int? id,

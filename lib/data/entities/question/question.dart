@@ -45,14 +45,22 @@ class FormQuestion {
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [FormQuestion].
-  factory FormQuestion.fromJson(String data) {
+  factory FormQuestion.fromJson(dynamic data) {
     return FormQuestion.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
   ///
   /// Converts [FormQuestion] to a JSON string.
-  String toJson() => json.encode(toMap());
+
+  Map<String, dynamic> toJson() => {
+        'category': category,
+        'type': type,
+        'difficulty': difficulty,
+        'question': question,
+        'correct_answer': correctAnswer,
+        'incorrect_answers': incorrectAnswers,
+      };
 
   FormQuestion copyWith({
     String? category,
