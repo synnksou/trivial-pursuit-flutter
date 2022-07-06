@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../data/entities/user/user.dart';
 
 class Profil extends StatefulWidget {
-  const Profil({Key? key, User? user}) : super(key: key);
+  const Profil({Key? key, TriviaUser? user}) : super(key: key);
 
   @override
   State<Profil> createState() => _ProfilState();
 }
 
 class _ProfilState extends State<Profil> {
-  User user = User(
+  TriviaUser user = TriviaUser(
     id: 1,
     score: 2,
     pseudo: "pseudo",

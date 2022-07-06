@@ -13,12 +13,12 @@ class UserRepository {
 
   UserRepository._();
 
-  Future<QuerySnapshot<User>> getUserById(String id) async {
-    Future<QuerySnapshot<User>> user = _userFirebase.getUserById(id);
+  Future<QuerySnapshot<TriviaUser>> getUserById(String id) async {
+    Future<QuerySnapshot<TriviaUser>> user = _userFirebase.getUserById(id);
     return user;
   }
 
-  Future<DocumentReference<User>> createUser(User user) async {
+  Future<DocumentReference<TriviaUser>> createUser(TriviaUser user) async {
     return await _userFirebase.insertUser(user);
   }
 }
