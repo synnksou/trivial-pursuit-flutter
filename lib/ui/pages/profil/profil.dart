@@ -11,7 +11,7 @@ class Profil extends StatefulWidget {
 
 class _ProfilState extends State<Profil> {
   TriviaUser user = TriviaUser(
-    id: 1,
+    id: "test",
     score: 2,
     pseudo: "pseudo",
     avatar: "avatar",

@@ -11,6 +11,10 @@ class AuthFirebase {
 
   AuthFirebase._();
 
+  String? getUserUuid() {
+    return _firebaseAuth.currentUser?.uid;
+  }
+
   Future<UserCredential> signInWithCreditentials(
       {required String email, required String password}) async {
     return await _firebaseAuth.signInWithEmailAndPassword(

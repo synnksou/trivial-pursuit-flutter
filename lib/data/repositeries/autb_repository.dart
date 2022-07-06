@@ -10,6 +10,10 @@ class AuthRepository {
     return _instance;
   }
 
+/*   static String? getUserUuid() {
+    return _authFirebase.getUserUuid().uid;
+  }
+ */
   AuthRepository._();
 
   Future<User?> signIn(String email, String password) async {
