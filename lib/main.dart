@@ -1,6 +1,9 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_color_generator/material_color_generator.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/learderboard/leaderboard.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/profil/profil.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,9 +38,13 @@ class MyApp extends StatelessWidget {
           primarySwatch: themeColor,
           backgroundColor: const Color.fromRGBO(15, 23, 41, 1)),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(
-        title: '',
-      ),
+      home: SplashScreen(
+          seconds: 3,
+          navigateAfterSeconds: const MyHomePage(title: ''),
+          image: Image.asset('assets/images/large_trivialistic.png'),
+          photoSize: 150.0,
+          backgroundColor: Colors.white,
+          loaderColor: Colors.blue),
     );
   }
 }
