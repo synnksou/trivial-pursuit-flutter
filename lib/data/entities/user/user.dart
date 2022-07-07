@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 
 class TriviaUser {
-  int? id;
+  String? id;
   int? score;
   String? pseudo;
   String? avatar;
@@ -25,7 +25,7 @@ class TriviaUser {
   }
 
   factory TriviaUser.fromMap(Map<String, dynamic> data) => TriviaUser(
-        id: data['id'] as int?,
+        id: data['id'] as String?,
         score: data['score'] as int?,
         pseudo: data['pseudo'] as String?,
         avatar: data['avatar'] as String?,
@@ -74,7 +74,7 @@ class TriviaUser {
   }
 
   TriviaUser copyWith({
-    int? id,
+    String? id,
     int? score,
     String? pseudo,
     String? avatar,

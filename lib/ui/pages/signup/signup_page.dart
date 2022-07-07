@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trivial_pursuit_flutter/data/entities/user/user.dart';
 import 'package:trivial_pursuit_flutter/data/repositeries/autb_repository.dart';
 import 'package:trivial_pursuit_flutter/data/repositeries/user_repository.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/signup/bloc/signup_cubit.dart';
+import 'package:uuid/uuid.dart';
 
 import 'bloc/signup_state.dart';
 
@@ -106,7 +108,18 @@ class _SignupPageState extends State<SignupPage> {
                               cursorColor: Colors.white),
                           ElevatedButton(
                             onPressed: () {
-                              //cubit!.signup();
+                              var email = _emailController.text;
+                              var password = _passwordController.text;
+                              var uuid = const Uuid();
+
+                              var user = TriviaUser(
+                                  id: uuid.v1(),
+                                  score: 1,
+                                  games: 1,
+                                  pseudo: email,
+                                  avatar: "");
+
+                              cubit!.registerUser(email, password, user);
                             },
                             child: const Text('Senregistrer'),
                           ),
