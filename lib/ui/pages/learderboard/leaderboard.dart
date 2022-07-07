@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trivial_pursuit_flutter/data/repositeries/user_repository.dart';
+import 'package:trivial_pursuit_flutter/ui/pages/learderboard/bloc/leaderboard_cubit.dart';
 
-class Leaderboard extends StatelessWidget {
-  Leaderboard({Key? key}) : super(key: key);
+import 'bloc/leaderboard_state.dart';
 
-  final List list = List.generate(1000, (index) {
+class Leaderboard extends StatefulWidget {
+  const Leaderboard({Key? key}) : super(key: key);
+
+  @override
+  _LeaderboardState createState() => _LeaderboardState();
+}
+
+class _LeaderboardState extends State {
+  LeaderboardCubit? cubit;
+
+  /*  final List list = List.generate(1000, (index) {
     return {
       "id": index + 1,
       "title": "This is the title $index",
       "subtitle": "This is the subtitle $index"
     };
-  });
+  }); */
 
   handleColorCircle(position) {
     switch (position) {
@@ -33,36 +45,64 @@ class Leaderboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) => Card(
-            semanticContainer: true,
-            elevation: 6,
-            color: const Color.fromRGBO(14, 25, 43, 1),
-            margin: const EdgeInsets.all(10),
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: handleColorCircle(list[index]["id"]),
-                child: Text(
-                  list[index]["id"].toString(),
-                  style: handleTextColor(
-                    list[index]["id"],
-                  ),
-                ),
-              ),
-              title: Text(list[index]["title"],
-                  style: const TextStyle(
-                      color: Color.fromRGBO(171, 191, 236, 1),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold)),
-              subtitle: Text(list[index]["subtitle"],
-                  style: const TextStyle(
-                      color: Color.fromRGBO(171, 191, 236, 1),
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold)),
-              /*    trailing: const Icon(Icons.add_a_photo), */
-            )),
-      ),
-    );
+        body: MultiRepositoryProvider(
+            providers: [
+          RepositoryProvider<UserRepository>(
+            create: (_) => UserRepository.getInstance(),
+          )
+        ],
+            child: BlocProvider(
+                create: (context) {
+                  cubit = LeaderboardCubit(
+                    userRepository:
+                        RepositoryProvider.of<UserRepository>(context),
+                  );
+                  return cubit!..getLeaderboard();
+                },
+                child: BlocConsumer<LeaderboardCubit, LeaderboardState>(
+                    listener: (context, state) {
+                  if (state is Error) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(
+                          const SnackBar(
+                            content: Text("error"),
+                          ),
+                        )
+                        .closed
+                        .then((value) => {});
+                  }
+                }, builder: (context, state) {
+                  if (state is Loading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is Saved) {
+                    return ListView.builder(
+                      itemCount: state.users.length,
+                      itemBuilder: (context, index) {
+                        final user = state.users[index];
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: handleColorCircle(index + 1),
+                            child: Text(
+                              (index + 1).toString(),
+                              style: handleTextColor(index + 1),
+                            ),
+                          ),
+                          title: Text(
+                            user.pseudo!,
+                            style: handleTextColor(index + 1),
+                          ),
+                          subtitle: Text(
+                            user.score!.toString(),
+                            style: handleTextColor(index + 1),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return const Scaffold();
+                  }
+                }))));
   }
 }

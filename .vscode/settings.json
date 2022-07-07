@@ -1,3 +1,5 @@
 {
-    "cmake.sourceDirectory": "${workspaceFolder}/linux"
+  "cmake.sourceDirectory": "${workspaceFolder}/linux",
+  "dart.flutterSdkPath": "/Users/antoine/flutter",
+  "dart.sdkPath": "/Users/antoine/flutter/bin/cache/dart-sdk"
 }

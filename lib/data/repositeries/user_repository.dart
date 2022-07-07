@@ -18,6 +18,11 @@ class UserRepository {
     return user;
   }
 
+  Future<QuerySnapshot<TriviaUser>> getUsers() async {
+    QuerySnapshot<TriviaUser> users = await _userFirebase.getUsers();
+    return users;
+  }
+
   Future<DocumentReference<TriviaUser>> createUser(TriviaUser user) async {
     return await _userFirebase.insertUser(user);
   }
