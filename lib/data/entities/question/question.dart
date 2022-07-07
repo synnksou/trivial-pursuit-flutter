@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:collection/collection.dart';
 
 class FormQuestion {
@@ -45,8 +43,13 @@ class FormQuestion {
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [FormQuestion].
-  factory FormQuestion.fromJson(dynamic data) {
-    return FormQuestion.fromMap(json.decode(data) as Map<String, dynamic>);
+  FormQuestion.fromJson(Map<String, dynamic> json) {
+    category = json["category"];
+    type = json["type"];
+    difficulty = json["difficulty"];
+    question = json["question"];
+    correctAnswer = json["correct_answer"];
+    incorrectAnswers = json["incorrect_answers"]?.cast<String>();
   }
 
   /// `dart:convert`

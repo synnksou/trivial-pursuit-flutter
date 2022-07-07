@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:trivial_pursuit_flutter/data/entities/question/question.dart';
 
 class Results {
@@ -31,14 +29,22 @@ class Results {
   /// dart:convert
   ///
   /// Parses the string and returns the resulting Json object as [Results].
-  factory Results.fromJson(String data) {
-    return Results.fromMap(json.decode(data) as Map<String, dynamic>);
+  Results.fromJson(dynamic data) {
+    responseCode = data['response_code'] as int?;
+    date = data['date'] as String?;
+    results = (data['results'] as List<dynamic>?)
+        ?.map((e) => FormQuestion.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   /// dart:convert
   ///
   /// Converts [Results] to a JSON string.
-  String toJson() => json.encode(toMap());
+  Map<String, dynamic> toJson() => {
+        'response_code': responseCode,
+        'date': date,
+        'results': results?.map((e) => e.toMap()).toList(),
+      };
 
   Results copyWith({
     int? responseCode,

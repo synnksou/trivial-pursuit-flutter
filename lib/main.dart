@@ -8,6 +8,7 @@ import 'package:trivial_pursuit_flutter/ui/pages/learderboard/leaderboard.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/profil/profil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'ui/pages/games/games_page.dart';
 import 'ui/pages/signup/signup_page.dart';
 
 void main() async {
@@ -66,7 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
   static final List<Widget> _widgetOptions = <Widget>[
     const SignupPage(),
     Leaderboard(),
-    const Profil()
+    const Profil(),
+    const GamePage(),
   ];
 
   final Color _itemColor = const Color.fromRGBO(86, 11, 227, 1);
@@ -99,6 +101,11 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: SvgPicture.asset('assets/icons/account.svg',
                 color: _selectedIndex == 2 ? _itemColor : Colors.black),
             label: 'Profil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.games,
+                color: _selectedIndex == 3 ? _itemColor : Colors.black),
+            label: 'Questions',
           ),
         ],
         currentIndex: _selectedIndex,
