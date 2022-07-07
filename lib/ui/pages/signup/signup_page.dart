@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:trivial_pursuit_flutter/data/entities/user/user.dart';
 import 'package:trivial_pursuit_flutter/data/repositeries/autb_repository.dart';
 import 'package:trivial_pursuit_flutter/data/repositeries/user_repository.dart';
@@ -107,7 +108,7 @@ class _SignupPageState extends State<SignupPage> {
                               ),
                               cursorColor: Colors.white),
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               var email = _emailController.text;
                               var password = _passwordController.text;
                               var uuid = const Uuid();
@@ -119,7 +120,13 @@ class _SignupPageState extends State<SignupPage> {
                                   pseudo: email,
                                   avatar: "");
 
-                              cubit!.registerUser(email, password, user);
+                              ImagePicker picker = ImagePicker();
+
+                              XFile? image = await picker.pickImage(
+                                  source: ImageSource.gallery);
+
+                              cubit!
+                                  .registerUser(email, password, user, image!);
                             },
                             child: const Text('Senregistrer'),
                           ),
