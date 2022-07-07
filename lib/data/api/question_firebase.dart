@@ -26,9 +26,19 @@ class QuestionsFirebase {
           FormQuestion question) async =>
       _questionRef.add(question);
 
-  Future<QuerySnapshot<FormQuestion>> getQuestions() async =>
-      await _questionRef.get();
+  Future<FormQuestion?> getQuestions() async {
+    final list = await _questionRef.get();
+    final test = await _questionRef.doc(list.docs.first.id).get();
+
+    return test.data();
+  }
 
   Future<QuerySnapshot<FormQuestion>> getByType(String type) async =>
       await _questionRef.where('type', isEqualTo: type).get();
+
+  Future<void> deleteQuestion() async {
+    QuerySnapshot<FormQuestion> element =
+        _questionRef.get() as QuerySnapshot<FormQuestion>;
+    _questionRef.doc(element.docs.first.id).delete();
+  }
 }

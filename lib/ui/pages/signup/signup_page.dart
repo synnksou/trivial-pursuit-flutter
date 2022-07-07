@@ -128,42 +128,5 @@ class _SignupPageState extends State<SignupPage> {
                     );
                   },
                 ))));
-    /*  body:
-         Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                focusedBorder: OutlineInputBorder(),
-                border: OutlineInputBorder(),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith((states) {
-                  // If the button is pressed, return green, otherwise blue
-                  if (states.contains(MaterialState.pressed)) {
-                    return Colors.green;
-                  }
-                  return Colors.black;
-                }),
-              ),
-              child: const Text('Valider'),
-            ),
-          ],
-        ),
-      ), 
-    )*/
   }
 }
