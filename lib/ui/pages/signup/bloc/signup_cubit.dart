@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:trivial_pursuit_flutter/data/repositeries/autb_repository.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/signup/bloc/signup_state.dart';
 import '../../../../data/entities/user/user.dart';
@@ -17,12 +18,13 @@ class SignupCubit extends Cubit<SignupState> {
   }
 
   Future<void> registerUser(
-      String email, String password, TriviaUser user) async {
+      String email, String password, TriviaUser user, XFile file) async {
     emit(const Loading());
     User? userAuth = await authRepository.signUp(email, password);
 
     if (userAuth != null) {
       await userRepository.createUser(user);
+      await userRepository.uploadAvatar(file, userAuth.uid);
       emit(const Saved());
     } else {
       emit(const Error('Error signing up'));
