@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/learderboard/leaderboard.dart';
+import 'package:trivial_pursuit_flutter/ui/pages/login/login_page.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/profil/profil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
   final routerDelegate = BeamerDelegate(
       locationBuilder: RoutesLocationBuilder(routes: {
     '/': (context, state, date) => const SignupPage(),
+    '/login': (context, state, date) => const LoginPage(),
     '/home': (context, state, date) => const MyHomePage(
           title: '',
         ),
@@ -93,10 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-         /* BottomNavigationBarItem(
+          /*
+          BottomNavigationBarItem(
             icon: SvgPicture.asset('assets/icons/home-variant.svg',
                 color: _selectedIndex == 0 ? _itemColor : Colors.black),
             label: 'Accueil',

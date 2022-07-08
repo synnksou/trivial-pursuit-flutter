@@ -1,50 +1,23 @@
-import 'dart:io';
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:trivial_pursuit_flutter/data/entities/user/user.dart';
 import 'package:trivial_pursuit_flutter/data/repositeries/autb_repository.dart';
 import 'package:trivial_pursuit_flutter/data/repositeries/user_repository.dart';
-import 'package:trivial_pursuit_flutter/ui/pages/signup/bloc/signup_cubit.dart';
-import 'package:uuid/uuid.dart';
-import 'bloc/signup_state.dart';
+import 'package:trivial_pursuit_flutter/ui/pages/login/bloc/login_cubit.dart';
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+import 'bloc/login_state.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _SignupPageState createState() => _SignupPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _pseudoController = TextEditingController();
-  SignupCubit? cubit;
-  XFile? _image;
-
-  ImagePicker picker = ImagePicker();
-
-  Future getImage() async {
-    _image = await picker.pickImage(source: ImageSource.gallery);
-
-    _image ??= '' as XFile?;
-  }
-
-  Widget? getChild() {
-    if (_image != null) {
-      return CircleAvatar(
-          backgroundImage: Image.file(
-        File(_image!.path.toString()),
-        fit: BoxFit.cover,
-      ).image);
-    } else {
-      return const CircleAvatar(
-        backgroundColor: Colors.black,
-      );
-    }
-  }
+  LoginCubit? cubit;
 
   TextStyle styleLabel = const TextStyle(
       color: Color.fromRGBO(187, 203, 236, 1),
@@ -55,7 +28,7 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Signup',
+          title: const Text('Login',
               style: TextStyle(
                   color: Color.fromRGBO(187, 203, 236, 1),
                   fontSize: 20,
@@ -72,7 +45,7 @@ class _SignupPageState extends State<SignupPage> {
             ],
             child: BlocProvider(
                 create: (context) {
-                  cubit = SignupCubit(
+                  cubit = LoginCubit(
                     authRepository:
                         RepositoryProvider.of<AuthRepository>(context),
                     userRepository:
@@ -80,7 +53,7 @@ class _SignupPageState extends State<SignupPage> {
                   );
                   return cubit!;
                 },
-                child: BlocConsumer<SignupCubit, SignupState>(
+                child: BlocConsumer<LoginCubit, LoginState>(
                   listener: (context, state) {
                     if (state is Error) {
                       ScaffoldMessenger.of(context)
@@ -103,7 +76,7 @@ class _SignupPageState extends State<SignupPage> {
                       // Navigator.of(context).pop();
                       //chargement d'ecren de chargement
                       context.beamToNamed('/home',
-                          beamBackOnPop: true, popBeamLocationOnPop: true);
+                      beamBackOnPop: true, popBeamLocationOnPop: true);
                     }
                   },
                   builder: (context, state) {
@@ -123,64 +96,65 @@ class _SignupPageState extends State<SignupPage> {
                               ),
                               cursorColor: Colors.white),
                           TextField(
-                              controller: _pseudoController,
-                              decoration: InputDecoration(
-                                labelText: 'Pseudo',
-                                labelStyle: styleLabel,
-                              ),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                              ),
-                              cursorColor: Colors.white),
-                          TextField(
                               controller: _passwordController,
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 labelStyle: styleLabel,
-                                fillColor: Colors.white,
+                                fillColor: Colors.black,
                               ),
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
                               ),
                               cursorColor: Colors.white),
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 50.0,
-                            child: InkWell(
-                              onTap: getImage,
-                              child: getChild(),
-                            ),
-                          ),
                           ElevatedButton(
-                            onPressed: () async {
-                              var email = _emailController.text;
-                              var password = _passwordController.text;
-                              var uuid = const Uuid();
-                              var user = TriviaUser(
-                                  id: uuid.v1(),
-                                  score: 0,
-                                  games: 0,
-                                  pseudo: _pseudoController.text,
-                                  avatar: "");
-
-                              cubit!
-                                  .registerUser(email, password, user, _image!);
-                            },
-                            child: const Text("S'enregistrer"),
-                          ),
-                          Text("Vous avez déjà un compte ? "),
-                          ElevatedButton(
-                            child: const Text("Se connecter"),
                             onPressed: () {
-                              context.beamToNamed('/login');
+                              cubit!.connectUser(_emailController.text,
+                                  _passwordController.text);
                             },
+                            child: const Text('Se connecter'),
                           ),
                         ],
                       ),
                     );
                   },
                 ))));
+    /*  body:
+         Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                labelText: 'Password',
+                focusedBorder: OutlineInputBorder(),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith((states) {
+                  // If the button is pressed, return green, otherwise blue
+                  if (states.contains(MaterialState.pressed)) {
+                    return Colors.green;
+                  }
+                  return Colors.black;
+                }),
+              ),
+              child: const Text('Valider'),
+            ),
+          ],
+        ),
+      ), 
+    )*/
   }
 }
