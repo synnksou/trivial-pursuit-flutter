@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trivial_pursuit_flutter/data/entities/user/user.dart';
@@ -18,6 +19,7 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _pseudoController = TextEditingController();
   SignupCubit? cubit;
 
   TextStyle styleLabel = const TextStyle(
@@ -76,6 +78,7 @@ class _SignupPageState extends State<SignupPage> {
                     if (state is Saved) {
                       // Navigator.of(context).pop();
                       //chargement d'ecren de chargement
+                      context.beamToNamed('/home', beamBackOnPop: true, popBeamLocationOnPop: true);
                     }
                   },
                   builder: (context, state) {
@@ -87,6 +90,17 @@ class _SignupPageState extends State<SignupPage> {
                               controller: _emailController,
                               decoration: InputDecoration(
                                 labelText: 'Email',
+                                labelStyle: styleLabel,
+                              ),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                              cursorColor: Colors.white),
+                          TextField(
+                              controller: _pseudoController,
+                              decoration: InputDecoration(
+                                labelText: 'Pseudo',
                                 labelStyle: styleLabel,
                               ),
                               style: const TextStyle(
@@ -111,17 +125,16 @@ class _SignupPageState extends State<SignupPage> {
                               var email = _emailController.text;
                               var password = _passwordController.text;
                               var uuid = const Uuid();
-
                               var user = TriviaUser(
                                   id: uuid.v1(),
-                                  score: 1,
-                                  games: 1,
-                                  pseudo: email,
+                                  score: 0,
+                                  games: 0,
+                                  pseudo: _pseudoController.text,
                                   avatar: "");
 
                               cubit!.registerUser(email, password, user);
                             },
-                            child: const Text('Senregistrer'),
+                            child: const Text("S'enregistrer"),
                           ),
                         ],
                       ),

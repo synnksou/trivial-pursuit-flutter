@@ -37,7 +37,7 @@ class _LeaderboardState extends State {
   }
 
   handleTextColor(position) {
-    return position < 2
+    return position < 4
         ? const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
         : const TextStyle(color: Colors.black, fontWeight: FontWeight.bold);
   }
@@ -45,6 +45,13 @@ class _LeaderboardState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Classement',
+            style: TextStyle(
+                color: Color.fromRGBO(187, 203, 236, 1),
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+      ),
         body: MultiRepositoryProvider(
             providers: [
           RepositoryProvider<UserRepository>(
@@ -91,11 +98,11 @@ class _LeaderboardState extends State {
                           ),
                           title: Text(
                             user.pseudo!,
-                            style: handleTextColor(index + 1),
+                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(
-                            user.score!.toString(),
-                            style: handleTextColor(index + 1),
+                            ' Best Score: ${user.score!.toString()}',
+                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                           ),
                         );
                       },
