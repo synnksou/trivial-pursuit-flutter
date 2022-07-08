@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,6 +22,29 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   SignupCubit? cubit;
+  XFile? _image;
+
+  ImagePicker picker = ImagePicker();
+
+  Future getImage() async {
+    _image = await picker.pickImage(source: ImageSource.gallery);
+
+    _image ??= '' as XFile?;
+  }
+
+  Widget? getChild() {
+    if (_image != null) {
+      return CircleAvatar(
+          backgroundImage: Image.file(
+        File(_image!.path.toString()),
+        fit: BoxFit.cover,
+      ).image);
+    } else {
+      return const CircleAvatar(
+        backgroundColor: Colors.black,
+      );
+    }
+  }
 
   TextStyle styleLabel = const TextStyle(
       color: Color.fromRGBO(187, 203, 236, 1),
@@ -107,6 +132,14 @@ class _SignupPageState extends State<SignupPage> {
                                 fontSize: 12,
                               ),
                               cursorColor: Colors.white),
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 50.0,
+                            child: InkWell(
+                              onTap: getImage,
+                              child: getChild(),
+                            ),
+                          ),
                           ElevatedButton(
                             onPressed: () async {
                               var email = _emailController.text;
@@ -120,13 +153,8 @@ class _SignupPageState extends State<SignupPage> {
                                   pseudo: email,
                                   avatar: "");
 
-                              ImagePicker picker = ImagePicker();
-
-                              XFile? image = await picker.pickImage(
-                                  source: ImageSource.gallery);
-
                               cubit!
-                                  .registerUser(email, password, user, image!);
+                                  .registerUser(email, password, user, _image!);
                             },
                             child: const Text('Senregistrer'),
                           ),

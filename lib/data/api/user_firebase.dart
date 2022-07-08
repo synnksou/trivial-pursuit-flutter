@@ -62,4 +62,9 @@ class UserFirebase {
       uploadTask = ref.putFile(io.File(file.path), metadata);
     }
   }
+
+  Future<QuerySnapshot<TriviaUser>> getFileById(String id) async {
+    var document = await _userRef.where('avatar', isEqualTo: '$id.jpeg').get();
+    return document; // faut faire le data() pour avoir le document
+  }
 }
