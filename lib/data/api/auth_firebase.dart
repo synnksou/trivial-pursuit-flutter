@@ -36,7 +36,11 @@ class AuthFirebase {
     return await _firebaseAuth.signOut();
   }
 
-  bool getCurrentUser() {
+  bool isConnected() {
     return _firebaseAuth.currentUser != null;
+  }
+
+  getCurrentUser() {
+    return _firebaseAuth.currentUser?.uid;
   }
 }

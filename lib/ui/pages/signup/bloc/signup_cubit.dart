@@ -17,6 +17,10 @@ class SignupCubit extends Cubit<SignupState> {
     emit(const SignupState.saved());
   }
 
+  String? getUserUid(){
+   return userRepository.getUserUuid();
+  }
+
   Future<void> registerUser(
       String email, String password, TriviaUser user, XFile file) async {
     emit(const Loading());

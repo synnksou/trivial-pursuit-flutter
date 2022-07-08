@@ -159,11 +159,13 @@ class _SignupPageState extends State<SignupPage> {
                               var password = _passwordController.text;
                               var uuid = const Uuid();
                               var user = TriviaUser(
-                                  id: uuid.v1(),
+                                  id: cubit?.userRepository.getUserUuid(),
                                   score: 0,
                                   games: 0,
                                   pseudo: _pseudoController.text,
                                   avatar: "");
+
+                              print(user.id);
 
                               cubit!
                                   .registerUser(email, password, user, _image!);
