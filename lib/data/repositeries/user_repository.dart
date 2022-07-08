@@ -27,4 +27,9 @@ class UserRepository {
     await _userFirebase.uploadFile(file, userId);
     return;
   }
+
+  Future<QuerySnapshot<TriviaUser>> getFileById(String id) async {
+    Future<QuerySnapshot<TriviaUser>> file = _userFirebase.getFileById(id);
+    return file;
+  }
 }
