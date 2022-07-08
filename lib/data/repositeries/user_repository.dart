@@ -51,5 +51,8 @@ class UserRepository {
    }else{
      return null;
    }
+
+  Future<void> setScore(TriviaUser user) async {
+   await _userFirebase.updateUser(user);
   }
 }

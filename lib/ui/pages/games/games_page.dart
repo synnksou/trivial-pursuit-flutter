@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trivial_pursuit_flutter/data/api/user_firebase.dart';
 import 'package:trivial_pursuit_flutter/data/entities/question/question.dart';
-
+import 'package:swiping_card_deck/swiping_card_deck.dart';
+import 'package:trivial_pursuit_flutter/data/repositeries/user_repository.dart';
 import '../../../data/repositeries/question_repository.dart';
 import 'bloc/game_state.dart';
 import 'bloc/game_cubit.dart';
@@ -40,6 +42,7 @@ class _GamePageState extends State<GamePage> {
           child: BlocProvider(
             create: (context) {
               cubit = GameCubit(
+                userRepository: RepositoryProvider.of<UserRepository>(context),
                 questionRepository:
                     RepositoryProvider.of<QuestionRepository>(context),
               );
@@ -72,45 +75,99 @@ class _GamePageState extends State<GamePage> {
                   );
                 } else if (state is Retrieved) {
                   List<FormQuestion> questions = state.questions;
-                  for (var element in questions) {
-                    print(element.question);
+                  var indexQuestion;
+                  List<String> responses = [];
+                  int score = 0;
+
+                  void scoreIncrement(String difficulty) {
+                    if (difficulty == 'easy') {
+                      score += 2;
+                    } else if (difficulty == 'medium') {
+                      score += 5;
+                    } else if (difficulty == 'hard') {
+                      score += 10;
+                    }
                   }
 
-                  return ListView.builder(
-                    itemCount: questions.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          questions[index].question!,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        subtitle: Text(
-                          questions[index].difficulty!,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      );
-                    },
+                  void incrementScore(SwipingDeck<Card> deck, bool isCorrect,
+                      String difficulty) {
+                    if (isCorrect) {
+                      scoreIncrement(difficulty);
+                      deck.swipeRight();
+                    } else {
+                      deck.swipeRight();
+                    }
+                  }
+
+                  void saveScore(int score) {
+                    cubit!.setScore(score);
+                  }
+
+                  final SwipingCardDeck deck = SwipingCardDeck(
+                    cardDeck: questions.map((element) {
+                      indexQuestion = questions.indexOf(element);
+                      responses = [
+                        questions[indexQuestion].correctAnswer ?? "",
+                      ];
+                      responses
+                          .addAll(questions[indexQuestion].incorrectAnswers!);
+                      return Card(
+                          color: Colors.red,
+                          child: SizedBox(
+                              height: 300,
+                              width: 200,
+                              child: Text(
+                                  questions[indexQuestion].question ??
+                                      "question empty",
+                                  style: styleLabel)));
+                    }).toList(),
+                    onDeckEmpty: () => {saveScore(score)},
+                    onLeftSwipe: (Card card) {},
+                    onRightSwipe: (Card card) {},
+                    cardWidth: 200,
+                    swipeThreshold: MediaQuery.of(context).size.width / 3,
+                    minimumVelocity: 1000,
+                    rotationFactor: 0.8 / 3.14,
+                    swipeAnimationDuration: const Duration(milliseconds: 500),
+                  );
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      deck,
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.min,
+                          children: responses
+                              .map(
+                                (element) => TextButton(
+                                    style: ButtonStyle(
+                                      foregroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.blue),
+                                    ),
+                                    onPressed: element ==
+                                            questions[indexQuestion]
+                                                .correctAnswer
+                                        ? () => incrementScore(
+                                            deck,
+                                            true,
+                                            questions[indexQuestion]
+                                                .difficulty!)
+                                        : () => incrementScore(
+                                            deck,
+                                            false,
+                                            questions[indexQuestion]
+                                                .difficulty!),
+                                    child: Text(element)),
+                              )
+                              .toList())
+                    ],
                   );
                 } else {
                   return Container();
                 }
               },
-
-              /*  ListView.builder(
-                    itemCount: cubit.length,
-                    itemBuilder: (context, index) => Card(
-                      child: (context, index) => Card(
-                        semanticContainer: true,
-                        elevation: 6,
-                        color: const Color.fromRGBO(14, 25, 43, 1),
-                        margin: const EdgeInsets.all(10),
-                        child: const [
-                          ListTile(
-                              title: Text(cubit![index]["question"]),
-                              )
-                        ],
-                      ),
-                    ); */
             ),
           ),
         ));
