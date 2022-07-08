@@ -54,8 +54,12 @@ class TriviaUser {
   /// The [toJson] function should only be used to convert the object to a
   /// representation that is JSON encodable.
 
-  factory TriviaUser.fromJson(dynamic data) {
-    return TriviaUser.fromMap(json.decode(data) as Map<String, dynamic>);
+  TriviaUser.fromJson(Map<String, dynamic> json) {
+    id = json["id"];
+    score = json["score"];
+    pseudo = json["pseudo"];
+    avatar = json["avatar"];
+    games = json["games"];
   }
 
   /// `dart:convert`

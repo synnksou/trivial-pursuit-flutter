@@ -17,8 +17,13 @@ class AuthFirebase {
 
   Future<UserCredential> signInWithCreditentials(
       {required String email, required String password}) async {
-    return await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
+    try {
+      return await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on  Exception catch  (e) {
+      print('Failed with error code: ${e.toString()}');
+      return Future.error(e);
+    }
   }
 
   Future<UserCredential> signUp(
@@ -31,7 +36,11 @@ class AuthFirebase {
     return await _firebaseAuth.signOut();
   }
 
-  bool getCurrentUser() {
+  bool isConnected() {
     return _firebaseAuth.currentUser != null;
+  }
+
+  getCurrentUser() {
+    return _firebaseAuth.currentUser?.uid;
   }
 }

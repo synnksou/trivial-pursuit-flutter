@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trivial_pursuit_flutter/data/repositeries/autb_repository.dart';
@@ -74,6 +75,8 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is Saved) {
                       // Navigator.of(context).pop();
                       //chargement d'ecren de chargement
+                      context.beamToNamed('/home',
+                      beamBackOnPop: true, popBeamLocationOnPop: true);
                     }
                   },
                   builder: (context, state) {
@@ -88,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                                 labelStyle: styleLabel,
                               ),
                               style: const TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 12,
                               ),
                               cursorColor: Colors.white),
@@ -100,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                                 fillColor: Colors.black,
                               ),
                               style: const TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 12,
                               ),
                               cursorColor: Colors.white),

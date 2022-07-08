@@ -29,7 +29,9 @@ class UserFirebase {
   Future<DocumentReference<TriviaUser>> insertUser(TriviaUser user) async =>
       _userRef.add(user);
 
-  Future<QuerySnapshot<TriviaUser>> getUsers() async => await _userRef.get();
+  Future<QuerySnapshot<TriviaUser>> getUsers() {
+    return _userRef.orderBy("score", descending: true).get();
+  }
 
   Future<QuerySnapshot<TriviaUser>> searchUsers(String name) async {
     return await _userRef.where('name', isEqualTo: name).get();
