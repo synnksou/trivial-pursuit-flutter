@@ -1,6 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/entities/user/user.dart';
+import 'package:trivial_pursuit_flutter/data/entities/user/user.dart';
+import 'package:trivial_pursuit_flutter/data/repositeries/autb_repository.dart';
+import 'package:trivial_pursuit_flutter/data/repositeries/user_repository.dart';
+import 'package:trivial_pursuit_flutter/ui/pages/profil/bloc/profil_cubit.dart';
+import 'package:trivial_pursuit_flutter/ui/pages/profil/bloc/profil_state.dart';
 
 class Profil extends StatefulWidget {
   const Profil({Key? key, TriviaUser? user}) : super(key: key);
@@ -17,6 +23,8 @@ class _ProfilState extends State<Profil> {
     avatar: "avatar",
     games: 3,
   );
+
+  ProfilCubit? cubit;
 
   TextStyle styleLabel = const TextStyle(
       color: Color.fromRGBO(187, 203, 236, 1),
@@ -42,6 +50,9 @@ class _ProfilState extends State<Profil> {
 
     user.setPseudo(pseudo);
   }
+
+  // ignore: prefer_typing_uninitialized_variables
+  var image;
 
   @override
   Widget build(BuildContext context) {
@@ -107,24 +118,74 @@ class _ProfilState extends State<Profil> {
             ),
           ],
         ),
-        body: Center(
-            child: Column(children: <Widget>[
-          CircleAvatar(
-            backgroundColor: Colors.brown.shade800,
-            radius: 24,
-            child: const Text('AH'),
-          ),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Text("Nom d'utilisateur : ${user.pseudo}",
-                  style: styleLabel)),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Text("Best Score : ${user.score}", style: styleLabel)),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Text("Nombre de parties : ${user.games}", style: styleLabel),
-          )
-        ])));
+        body: MultiRepositoryProvider(
+            providers: [
+              RepositoryProvider<UserRepository>(
+                create: (_) => UserRepository.getInstance(),
+              ),
+              RepositoryProvider<AuthRepository>(
+                create: (_) => AuthRepository.getInstance(),
+              ),
+            ],
+            child: BlocProvider(
+                create: (context) {
+                  cubit = ProfilCubit(
+                    authRepository:
+                        RepositoryProvider.of<AuthRepository>(context),
+                    userRepository:
+                        RepositoryProvider.of<UserRepository>(context),
+                  );
+                  return cubit!;
+                },
+                child: BlocConsumer<ProfilCubit, ProfilState>(
+                    listener: (context, state) {
+                  if (state is Error) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(
+                          const SnackBar(
+                            content: Text("error"),
+                          ),
+                        )
+                        .closed
+                        .then((value) => {});
+                  }
+
+                  if (state is Loading) {
+                    //chargement d'ecren de chargement
+                    /*     setState(() {
+                        displayLoader = true
+                      }); */
+                  }
+                  if (state is Retrieved) {
+                    setState(() {
+                      QuerySnapshot<TriviaUser> image = state.image;
+                    });
+                  }
+                }, builder: (context, state) {
+                  return Container(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(children: [
+                        CircleAvatar(
+                          backgroundImage: image,
+                          radius: 24,
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            child: Text("Nom d'utilisateur : ${user.pseudo}",
+                                style: styleLabel)),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            child: Text("Best Score : ${user.score}",
+                                style: styleLabel)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 20),
+                          child: Text("Nombre de parties : ${user.games}",
+                              style: styleLabel),
+                        )
+                      ]));
+                }))));
   }
 }

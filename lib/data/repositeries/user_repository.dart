@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:trivial_pursuit_flutter/data/api/user_firebase.dart';
 import '../entities/user/user.dart';
 
@@ -25,5 +26,15 @@ class UserRepository {
 
   Future<DocumentReference<TriviaUser>> createUser(TriviaUser user) async {
     return await _userFirebase.insertUser(user);
+  }
+
+  Future<void> uploadAvatar(XFile file, String userId) async {
+    await _userFirebase.uploadFile(file, userId);
+    return;
+  }
+
+  Future<QuerySnapshot<TriviaUser>> getFileById(String id) async {
+    Future<QuerySnapshot<TriviaUser>> file = _userFirebase.getFileById(id);
+    return file;
   }
 }
