@@ -4,13 +4,12 @@ import 'package:collection/collection.dart';
 
 class TriviaUser {
   String? id;
-  int score;
+  int? score;
   String? pseudo;
   String? avatar;
   int? games;
 
-  TriviaUser(
-      {this.id, required this.score, this.pseudo, this.avatar, this.games});
+  TriviaUser({this.id, this.score, this.pseudo, this.avatar, this.games});
 
   @override
   String toString() {
@@ -22,7 +21,7 @@ class TriviaUser {
   }
 
   setScore(int score) {
-    this.score += score;
+    this.score != null ? this.score! + score : this.score = 0;
   }
 
   getPseudo() {
@@ -31,7 +30,7 @@ class TriviaUser {
 
   factory TriviaUser.fromMap(Map<String, dynamic> data) => TriviaUser(
         id: data['id'] as String?,
-        score: data['score'] as int,
+        score: data['score'] as int?,
         pseudo: data['pseudo'] as String?,
         avatar: data['avatar'] as String?,
         games: data['games'] as int?,

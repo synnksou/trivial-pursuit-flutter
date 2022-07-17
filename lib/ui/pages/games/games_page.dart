@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trivial_pursuit_flutter/data/api/user_firebase.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:trivial_pursuit_flutter/data/entities/question/question.dart';
 import 'package:swiping_card_deck/swiping_card_deck.dart';
-import 'package:trivial_pursuit_flutter/data/repositeries/user_repository.dart';
 import '../../../data/repositeries/question_repository.dart';
 import 'bloc/game_state.dart';
 import 'bloc/game_cubit.dart';
 
-class GamePage extends StatefulWidget {
+class GamePage extends HookWidget {
   const GamePage({Key? key}) : super(key: key);
 
   @override
-  _GamePageState createState() => _GamePageState();
-}
-
-class _GamePageState extends State<GamePage> {
-  GameCubit? cubit;
-
-  TextStyle styleLabel = const TextStyle(
-      color: Color.fromRGBO(187, 203, 236, 1),
-      fontSize: 16,
-      fontWeight: FontWeight.bold);
-
-  @override
   Widget build(BuildContext context) {
+    final _score = useState(0);
+    final _isclick = useState(false);
+    final _disableButton = useState(false);
+    final _difficulty = useState("easy");
+    final _scoreIncremented = useState(false);
+    final responses = useState([]);
+
+    GameCubit? cubit;
+
+    TextStyle styleLabel = const TextStyle(
+        color: Color.fromRGBO(187, 203, 236, 1),
+        fontSize: 16,
+        fontWeight: FontWeight.bold);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Game',
@@ -42,7 +43,7 @@ class _GamePageState extends State<GamePage> {
           child: BlocProvider(
             create: (context) {
               cubit = GameCubit(
-                userRepository: RepositoryProvider.of<UserRepository>(context),
+                //userRepository: RepositoryProvider.of<UserRepository>(context),
                 questionRepository:
                     RepositoryProvider.of<QuestionRepository>(context),
               );
@@ -74,56 +75,97 @@ class _GamePageState extends State<GamePage> {
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is Retrieved) {
-                  List<FormQuestion> questions = state.questions;
-                  var indexQuestion;
-                  List<String> responses = [];
-                  int score = 0;
+                  List<FormQuestion> _questions = state.questions;
 
-                  void scoreIncrement(String difficulty) {
+                  void _scoreIncrement(String difficulty) {
+                    _scoreIncremented.value = true;
                     if (difficulty == 'easy') {
-                      score += 2;
+                      _score.value += 2;
                     } else if (difficulty == 'medium') {
-                      score += 5;
+                      _score.value += 5;
                     } else if (difficulty == 'hard') {
-                      score += 10;
+                      _score.value += 10;
                     }
                   }
 
-                  void incrementScore(SwipingDeck<Card> deck, bool isCorrect,
-                      String difficulty) {
+                  void _AnswerHandler(bool isCorrect, String difficulty,
+                      FormQuestion question) {
                     if (isCorrect) {
-                      scoreIncrement(difficulty);
-                      deck.swipeRight();
+                      _isclick.value = true;
+                      _difficulty.value = difficulty;
                     } else {
-                      deck.swipeRight();
+                      _disableButton.value = true;
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            _buildPopupDialog(context, question),
+                      );
                     }
                   }
 
-                  void saveScore(int score) {
+                  /*void saveScore(int score) {
                     cubit!.setScore(score);
-                  }
+                  }*/
 
-                  final SwipingCardDeck deck = SwipingCardDeck(
-                    cardDeck: questions.map((element) {
-                      indexQuestion = questions.indexOf(element);
-                      responses = [
-                        questions[indexQuestion].correctAnswer ?? "",
-                      ];
-                      responses
-                          .addAll(questions[indexQuestion].incorrectAnswers!);
+                  SwipingCardDeck deck = SwipingCardDeck(
+                    cardDeck: _questions.map((question) {
+                      responses.value = [question.correctAnswer ?? ""];
+                      responses.value
+                          .addAll(question.incorrectAnswers!.toList());
                       return Card(
-                          color: Colors.red,
                           child: SizedBox(
-                              height: 300,
-                              width: 200,
-                              child: Text(
-                                  questions[indexQuestion].question ??
-                                      "question empty",
-                                  style: styleLabel)));
+                              height: 500,
+                              width: 1000,
+                              child: Column(children: [
+                                Container(
+                                    color: Colors.red,
+                                    child: Column(children: [
+                                      Text(
+                                          question.question ?? "question empty",
+                                          style: styleLabel),
+                                      Text(
+                                          question.difficulty ??
+                                              "difficulty unknomwn",
+                                          style: styleLabel),
+                                    ])),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: responses.value
+                                        .map(
+                                          (response) => _disableButton.value
+                                              ? Text(response)
+                                              : TextButton(
+                                                  style: ButtonStyle(
+                                                    foregroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                Color.fromRGBO(
+                                                                    33,
+                                                                    150,
+                                                                    243,
+                                                                    1)),
+                                                  ),
+                                                  onPressed: () => _AnswerHandler(
+                                                      response ==
+                                                              question
+                                                                  .correctAnswer
+                                                          ? true
+                                                          : false,
+                                                      question.difficulty!,
+                                                      question),
+                                                  child: Text(response)),
+                                        )
+                                        .toList())
+                              ])));
                     }).toList(),
-                    onDeckEmpty: () => {saveScore(score)},
+                    onDeckEmpty: () => {/*saveScore(score)*/},
                     onLeftSwipe: (Card card) {},
-                    onRightSwipe: (Card card) {},
+                    onRightSwipe: (Card card) {
+                      print("swiped right");
+                    },
+                    //_scoreIncremented.value = false,
                     cardWidth: 200,
                     swipeThreshold: MediaQuery.of(context).size.width / 3,
                     minimumVelocity: 1000,
@@ -134,34 +176,27 @@ class _GamePageState extends State<GamePage> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Text(
+                        "Score: ${_score.value}",
+                      ),
                       deck,
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.min,
-                          children: responses
-                              .map(
-                                (element) => TextButton(
-                                    style: ButtonStyle(
-                                      foregroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.blue),
-                                    ),
-                                    onPressed: element ==
-                                            questions[indexQuestion]
-                                                .correctAnswer
-                                        ? () => incrementScore(
-                                            deck,
-                                            true,
-                                            questions[indexQuestion]
-                                                .difficulty!)
-                                        : () => incrementScore(
-                                            deck,
-                                            false,
-                                            questions[indexQuestion]
-                                                .difficulty!),
-                                    child: Text(element)),
-                              )
-                              .toList())
+                      _isclick.value
+                          ? TextButton(
+                              style: ButtonStyle(
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Color.fromRGBO(33, 150, 243, 1)),
+                              ),
+                              onPressed: () => {
+                                    if (_isclick.value == true)
+                                      {
+                                        _scoreIncrement(_difficulty.value),
+                                        deck.swipeRight(),
+                                        _scoreIncremented.value = true,
+                                      }
+                                  },
+                              child: Text("Question suivante"))
+                          : Text("Veuillez repondre a la question"),
                     ],
                   );
                 } else {
@@ -172,4 +207,30 @@ class _GamePageState extends State<GamePage> {
           ),
         ));
   }
+}
+
+Widget _buildPopupDialog(BuildContext context, FormQuestion question) {
+  return AlertDialog(
+    title: const Text('Mauvaise réponse'),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text('La réponse à la question : "${question.question}"' +
+            ' est :  "${question.correctAnswer}"'),
+      ],
+    ),
+    actions: <Widget>[
+      new TextButton(
+        style: ButtonStyle(
+          foregroundColor:
+              MaterialStateProperty.all<Color>(Color.fromRGBO(33, 150, 243, 1)),
+        ),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: Text('Fermer'),
+      ),
+    ],
+  );
 }

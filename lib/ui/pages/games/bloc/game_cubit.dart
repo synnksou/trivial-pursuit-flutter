@@ -7,12 +7,10 @@ import 'package:trivial_pursuit_flutter/ui/pages/games/bloc/game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
   final QuestionRepository questionRepository;
-  final UserRepository userRepository;
 
   String selectAnswer = '';
 
-  GameCubit({required this.questionRepository, required this.userRepository})
-      : super(const Initial());
+  GameCubit({required this.questionRepository}) : super(const Initial());
 
   Future<void> getQuestions() async {
     emit(const Loading());
@@ -25,10 +23,9 @@ class GameCubit extends Cubit<GameState> {
     }
   }
 
-  Future<void> setScore(int score) async {
+  /*Future<void> setScore(int score) async {
     TriviaUser user = userRepository.getUserById("1") as TriviaUser;
     user.setScore(score);
     await userRepository.setScore(user);
-  }
+  }*/
 }
- 

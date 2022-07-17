@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
 
-  static var themeColor = generateMaterialColor(color: const Color(0x000f1729));
+  static var themeColor =
+      generateMaterialColor(color: Color.fromARGB(0, 0, 0, 0));
 
   final routerDelegate = BeamerDelegate(
       locationBuilder: RoutesLocationBuilder(routes: {
@@ -44,10 +45,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
         theme: ThemeData(
           scaffoldBackgroundColor: const Color.fromRGBO(26, 32, 4, 0),
+          textTheme: Theme.of(context).textTheme.apply(
+                bodyColor: Colors.black, //<-- SEE HERE
+                displayColor: Colors.black, //<-- SEE HERE
+              ),
           primarySwatch: themeColor,
         ),
         darkTheme: ThemeData(
             primarySwatch: themeColor,
+            textTheme: Theme.of(context).textTheme.apply(
+                  bodyColor: Colors.black, //<-- SEE HERE
+                  displayColor: Colors.black, //<-- SEE HERE
+                ),
             backgroundColor: const Color.fromRGBO(15, 23, 41, 1)),
         debugShowCheckedModeBanner: false,
         /*      home: SplashScreen(
@@ -60,7 +69,7 @@ class MyApp extends StatelessWidget {
         routerDelegate: routerDelegate,
         routeInformationParser:
             BeamerParser() // BeamerParser is the default one, but you can use any other one you want.
-    );
+        );
   }
 }
 
@@ -81,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static final List<Widget> _widgetOptions = <Widget>[
     Leaderboard(),
     const Profil(),
-    const GamePage(),
+    GamePage(),
   ];
 
   final Color _itemColor = const Color.fromRGBO(86, 11, 227, 1);

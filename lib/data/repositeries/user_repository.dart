@@ -45,14 +45,15 @@ class UserRepository {
   }
 
   getConnectedUser() async {
-   if(_authFirebase.isConnected()){
-     String uid = _authFirebase.getCurrentUser();
+    if (_authFirebase.isConnected()) {
+      String uid = _authFirebase.getCurrentUser();
       return await _userFirebase.getUserById(uid);
-   }else{
-     return null;
-   }
+    } else {
+      return null;
+    }
+  }
 
   Future<void> setScore(TriviaUser user) async {
-   await _userFirebase.updateUser(user);
+    await _userFirebase.updateUser(user);
   }
 }

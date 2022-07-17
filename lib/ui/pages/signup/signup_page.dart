@@ -157,7 +157,6 @@ class _SignupPageState extends State<SignupPage> {
                             onPressed: () async {
                               var email = _emailController.text;
                               var password = _passwordController.text;
-                              var uuid = const Uuid();
                               var user = TriviaUser(
                                   id: cubit?.userRepository.getUserUuid(),
                                   score: 0,

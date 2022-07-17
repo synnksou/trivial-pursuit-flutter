@@ -49,6 +49,8 @@ dependencies:
   http: ^0.13.4
   firebase_storage: ^10.3.1
   swiping_card_deck: ^1.2.0
+  flutter_hooks: ^0.18.5+1
+  
   
 dev_dependencies:
   flutter_test:
