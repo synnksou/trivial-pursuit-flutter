@@ -20,6 +20,10 @@ class TriviaUser {
     this.pseudo = pseudo;
   }
 
+  setScore(int score) {
+    this.score != null ? this.score! + score : this.score = 0;
+  }
+
   getPseudo() {
     return pseudo;
   }

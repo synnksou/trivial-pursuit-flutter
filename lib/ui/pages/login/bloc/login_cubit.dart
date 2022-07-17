@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trivial_pursuit_flutter/data/repositeries/autb_repository.dart';
 import 'package:trivial_pursuit_flutter/ui/pages/login/bloc/login_state.dart';
-import '../../../../data/entities/user/user.dart';
 import '../../../../data/repositeries/user_repository.dart';
 import 'package:flutter/foundation.dart';
 

@@ -20,7 +20,7 @@ mixin _$ProfilState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(dynamic image) retrieved,
+    required TResult Function(QuerySnapshot<TriviaUser> image) retrieved,
     required TResult Function(String error) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$ProfilState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$ProfilState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) =>
@@ -124,7 +124,7 @@ class _$Initial implements Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(dynamic image) retrieved,
+    required TResult Function(QuerySnapshot<TriviaUser> image) retrieved,
     required TResult Function(String error) error,
   }) {
     return initial();
@@ -135,7 +135,7 @@ class _$Initial implements Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
   }) {
     return initial?.call();
@@ -146,7 +146,7 @@ class _$Initial implements Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -238,7 +238,7 @@ class _$Loading implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(dynamic image) retrieved,
+    required TResult Function(QuerySnapshot<TriviaUser> image) retrieved,
     required TResult Function(String error) error,
   }) {
     return loading();
@@ -249,7 +249,7 @@ class _$Loading implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
   }) {
     return loading?.call();
@@ -260,7 +260,7 @@ class _$Loading implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -317,7 +317,7 @@ abstract class _$$RetrievedCopyWith<$Res> {
   factory _$$RetrievedCopyWith(
           _$Retrieved value, $Res Function(_$Retrieved) then) =
       __$$RetrievedCopyWithImpl<$Res>;
-  $Res call({dynamic image});
+  $Res call({QuerySnapshot<TriviaUser> image});
 }
 
 /// @nodoc
@@ -335,7 +335,10 @@ class __$$RetrievedCopyWithImpl<$Res> extends _$ProfilStateCopyWithImpl<$Res>
     Object? image = freezed,
   }) {
     return _then(_$Retrieved(
-      image == freezed ? _value.image : image,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as QuerySnapshot<TriviaUser>,
     ));
   }
 }
@@ -346,7 +349,7 @@ class _$Retrieved implements Retrieved {
   const _$Retrieved(this.image);
 
   @override
-  final dynamic image;
+  final QuerySnapshot<TriviaUser> image;
 
   @override
   String toString() {
@@ -375,7 +378,7 @@ class _$Retrieved implements Retrieved {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(dynamic image) retrieved,
+    required TResult Function(QuerySnapshot<TriviaUser> image) retrieved,
     required TResult Function(String error) error,
   }) {
     return retrieved(image);
@@ -386,7 +389,7 @@ class _$Retrieved implements Retrieved {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
   }) {
     return retrieved?.call(image);
@@ -397,7 +400,7 @@ class _$Retrieved implements Retrieved {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
@@ -446,9 +449,9 @@ class _$Retrieved implements Retrieved {
 }
 
 abstract class Retrieved implements ProfilState {
-  const factory Retrieved(final dynamic image) = _$Retrieved;
+  const factory Retrieved(final QuerySnapshot<TriviaUser> image) = _$Retrieved;
 
-  dynamic get image => throw _privateConstructorUsedError;
+  QuerySnapshot<TriviaUser> get image => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$RetrievedCopyWith<_$Retrieved> get copyWith =>
       throw _privateConstructorUsedError;
@@ -518,7 +521,7 @@ class _$Error implements Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(dynamic image) retrieved,
+    required TResult Function(QuerySnapshot<TriviaUser> image) retrieved,
     required TResult Function(String error) error,
   }) {
     return error(this.error);
@@ -529,7 +532,7 @@ class _$Error implements Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
   }) {
     return error?.call(this.error);
@@ -540,7 +543,7 @@ class _$Error implements Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(dynamic image)? retrieved,
+    TResult Function(QuerySnapshot<TriviaUser> image)? retrieved,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
